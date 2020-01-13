@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "strict": false,
+    "module": "esnext",
+    "target": "es5",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "sourceMap": true
+  }
+}
