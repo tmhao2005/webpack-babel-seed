@@ -1,11 +1,45 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "checkJs": false,
     "jsx": "react",
-    "strict": false,
-    "module": "esnext",
-    "target": "es5",
-    "moduleResolution": "node",
+    "strict": true,
+    "strictNullChecks": true,
+    "module": "ES2015",
+    "target": "ES2018",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "useDefineForClassFields": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2020"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "listFiles": true,
+    "outDir": "./lib"
+    // "outDir": "./lib" // won't work with rollup
+  },
+  "exclude": [
+    "node_modules",
+    "src/**/*.js",
+    "src/*advanced*.ts",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "types"
+  ]
 }
