@@ -5,7 +5,7 @@ const Dotenv = require('dotenv-webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
-const WebpackFreeTexPacker = require('webpack-free-tex-packer');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -15,10 +15,10 @@ const common = {
   entry: {
     client: [resolve('src', 'client', 'index.tsx')],
     // client: ['core-js/stable', 'regenerator-runtime/runtime', resolve('src', 'client', 'index.tsx')],
-    // client: './src/entry.js',
+    // client: './src/index.ts',
   },
   mode: isProd ? 'production' : 'development',
-  devtool: 'eval',
+  devtool: 'source-map',
   target: 'web',
   output: {
     filename: 'index.js',
@@ -30,7 +30,8 @@ const common = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
-      '@': resolve(__dirname, './src')
+      '@': resolve(__dirname, './src'),
+      'images': resolve(__dirname, './images'),
     } 
   },
   // externals: {
@@ -66,30 +67,47 @@ const common = {
       //   },
       // },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|svg|jpe?g|gif)$/i,
         use: [
           {
             loader: 'file-loader',
             options: {
-              outputPath: "./images",
-              publicPath: "./images",
+              outputPath: "./images", // store on disk
+              // publicPath: "./images", // on code request e.g: <img src="./images" />, if omitted, it will be as same ouputPath
             },
           },
         ],
       },
       {
-        test: /\.css$/,
+        test: /\.(css|less)$/,
+        include: /\.module\.(css|less)$/,
         use: [
           'style-loader',
           'css-modules-typescript-loader',
           {
             loader: 'css-loader',
             options: {
+              // should apply for css modules only
               modules: {
                 localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
-              },              
+              },
             }
-          }
+          },
+          'less-loader',
+        ]
+      },
+      {
+        test: /\.(css|less)$/,
+        exclude: /\.module\.(css|less)$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: false,
+            }
+          },
+          'less-loader',
         ]
       }
     ]
@@ -104,9 +122,16 @@ const common = {
       template: resolve(__dirname, 'index.ejs'),
       filename: 'index.html',
     }),
-    new WebpackFreeTexPacker(resolve(__dirname, 'images'), 'assets'),
+    new FaviconsWebpackPlugin({
+      logo: './images/stackoverflow.ico',
+    }),
     new WebpackAssetsManifest(),
     new LoadablePlugin(),
+    new webpack.ProvidePlugin({
+      '$': 'jquery',
+      // 'jQuery': 'jquery',
+      // 'window.jQuery': 'jquery',
+    }),
   ],
   optimization: {
     splitChunks: {
@@ -123,6 +148,14 @@ const common = {
   devServer: {
     historyApiFallback: {
       index: '/'
+    },
+    open: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: {'^/api' : ''},
+        secure: false,
+      }
     }
   },
 };

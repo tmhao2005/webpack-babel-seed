@@ -1,7 +1,8 @@
 import React from "react";
 import { screen, render, waitFor } from "@testing-library/react";
-import { Post } from ".";
+import '@testing-library/jest-dom';
 import axios from "axios";
+import { Post } from ".";
 
 jest.mock("axios");
 
@@ -11,7 +12,7 @@ afterAll(jest.restoreAllMocks);
 
 describe("Post", () => {
   it("shows loading", () => {
-    mockAxios.get.mockResolvedValue({ data: {} });
+    mockAxios.get.mockResolvedValue({ data: '' });
 
     render(<Post url="/test" />);
 

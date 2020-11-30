@@ -4,8 +4,11 @@ const presets = [
     {
       // "useBuiltIns": "usage",
       // "corejs": 3,
-      "modules": "cjs",
-      "debug": false
+      "modules": 'cjs', // false to keep `esm`
+      "debug": false,
+      "targets": {
+        "node": "current" // testing
+      }
     }
   ],
   [
@@ -18,7 +21,7 @@ const presets = [
 ];
 
 const plugins = [
-  '@babel/plugin-proposal-class-properties',
+  // '@babel/plugin-proposal-class-properties', // NOTE: It doesn't work with storybook
   [
     // https://github.com/gajus/babel-plugin-react-css-modules/issues/291
     // fix the hash name doesn't match anymore
@@ -33,7 +36,8 @@ const plugins = [
       libraryName: "antd",
       style: "css",
     }
-  ]
+  ],
+  "@babel/plugin-proposal-export-default-from"
 ];
 
 module.exports = { presets, plugins };

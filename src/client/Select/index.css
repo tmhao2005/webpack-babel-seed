@@ -1,0 +1,7 @@
+.bar {
+  background-image: url('../../../images/instagram-logo.jpeg');
+}
+
+.baz {
+  background-image: url('images/instagram-logo.jpeg');
+}

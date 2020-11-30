@@ -59,7 +59,7 @@ function build<T>(): BuildOperation<T> {
   return (a) => (b) => ({
     key: a,
     ...b,
-  });  
+  });
 }
 
 const bar = build<User>()('age' as const)({

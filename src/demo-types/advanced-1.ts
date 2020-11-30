@@ -1,8 +1,6 @@
-import { True } from "Boolean/_api";
-
 // #1
-const BLAH_DELETE = 'BLAH_DELETE'
-const BLAH_EDIT = 'BLAH_EDIT'
+const BLAH_DELETE = 'BLAH_DELETE';
+const BLAH_EDIT = 'BLAH_EDIT';
 
 export type DeleteAction = {
   type: typeof BLAH_DELETE
@@ -38,12 +36,14 @@ type Curry<A> = <T extends ValueType<A, 'type'>>(arg: T) => (payload: ExtractPay
 export const makeActionCreator = <A>(): Curry<A> => action => payload => ({
   type: action,
   payload,
-})
+});
 
 // declare function makeActionCreator<A>(params: infer R): Curry<A>;
 
 const deleteBlah = makeActionCreator<MyAction>()('BLAH_DELETE');
-deleteBlah({ id: '' }) // Correct
+deleteBlah({
+ id: ''
+}); // Correct
 // deleteBlah({ id: '', name: '' }) // Error
 
 const obj = {
@@ -67,11 +67,13 @@ type ColorStyle<T extends string> = Record<ColorType, Record<T, string>>;
 function getColorStyle<T extends string>(propertyName: T): ColorStyle<T> {
   // { [x: string]: string } !== { [P in string]: string }
   return {
-    accent: { [propertyName]: colors.accent },
-  } as ColorStyle<T> // have to cast
+    accent: {
+ [propertyName]: colors.accent
+},
+  } as ColorStyle<T>; // have to cast
 }
 
-// 
+//
 type MyType = {
   a: string;
   b: string;

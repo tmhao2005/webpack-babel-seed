@@ -7,33 +7,40 @@
     "jsx": "react",
     "strict": true,
     "strictNullChecks": true,
-    "module": "ES2015",
+    "module": "ESNext",
     "target": "ES2018",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "sourceMap": true,
     "noUnusedLocals": false,
     "noUnusedParameters": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "useDefineForClassFields": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "DOM",
-      "DOM.Iterable",
       "ES2020"
     ],
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "client": [
+        "src/client/"
+      ],
+      "@client/*": [
+        "src/client/*"
       ]
     },
-    "listFiles": true,
+    "listFiles": false,
     "outDir": "./lib"
     // "outDir": "./lib" // won't work with rollup
   },
   "exclude": [
     "node_modules",
     "src/**/*.js",
-    "src/*advanced*.ts",
+    "src/demo-types/*.ts",
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
   ],

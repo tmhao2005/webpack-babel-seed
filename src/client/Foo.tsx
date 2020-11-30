@@ -4,7 +4,7 @@ import { API } from "aws-amplify";
 interface Props {
   appointmentId: number
 }
- 
+
 export const Foo: React.FC<Props> = (props) => {
   const appointmentId = props.appointmentId;
   const [doctorId, setDoctorId] = React.useState<any>();
@@ -21,9 +21,9 @@ export const Foo: React.FC<Props> = (props) => {
         console.log("This does come", doctorData);
         setDoctor(doctorData);
       }
-    }
+    };
     loadDoctor();
-  }, [doctorId])
+  }, [doctorId]);
 
   React.useEffect(() => {
     const loadAppointment = async () => {
@@ -35,12 +35,39 @@ export const Foo: React.FC<Props> = (props) => {
         });
         console.log("This Loads", appointmentData);
         setDoctorId(appointmentData.doctorId);
-      }      
-    }
+      }
+    };
     loadAppointment();
-  }, [appointmentId])
+  }, [appointmentId]);
 
-  return doctor ? <div>{doctor.name}</div> : <div>Loading...</div>
-}
+  return doctor ? <div>{doctor.name}</div> : <div>Loading...</div>;
+};
 
 export default Foo;
+
+
+import {
+  Model, Optional
+} from 'sequelize'; // v6.3.5
+
+
+interface DefaultAttributes {
+  id: number;
+}
+interface TestAttributes extends DefaultAttributes {
+  field: number;
+}
+
+class BaseModel<T extends DefaultAttributes> extends Model<T, Optional<T, 'id'>> {
+  static test() {}
+}
+
+class MyModel extends BaseModel<TestAttributes> {}
+
+// T can't be `extends typeof BaseModel`
+// If you assign `MyModel extends BaseModel`, `TestAttributes` (MyModel) vs 'T' (BaseModel)
+function method<T extends typeof BaseModel>(model: T) {
+  model.test();
+}
+
+method(MyModel);

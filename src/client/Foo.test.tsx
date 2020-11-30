@@ -1,14 +1,6 @@
-import React from "react"
-import Enzyme, { mount } from "enzyme";
-// @ts-ignore
-import Adapter from 'enzyme-adapter-react-16';
-
-import { act } from 'react-dom/test-utils';
-
-Enzyme.configure({ adapter: new Adapter() });
-
-import Foo from "./Foo"
+import React from "react";
 import { API } from "aws-amplify";
+import Foo from "./Foo";
 
 jest.mock("aws-amplify");
 
@@ -19,7 +11,7 @@ beforeEach(() => {
         doctorId: "10000001"
       });
     }
-    
+
     if (path === "/doctor/get") {
       return Promise.resolve({
         name: "Mr. Doctor"
@@ -50,5 +42,5 @@ test('test with no act', async () => {
     // wrapper.update();
   });
 
-  expect(wrapper.find('div').at(0).text()).toEqual('Mr. Doctor');  
+  expect(wrapper.find('div').at(0).text()).toEqual('Mr. Doctor');
 });
