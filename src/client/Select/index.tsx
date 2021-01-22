@@ -1,7 +1,5 @@
 import React from "react";
-import BaseSelect, {
- Option, SelectProps
-} from "rc-select";
+import BaseSelect, { Option, SelectProps } from "rc-select";
 import "rc-select/assets/index.less";
 
 import "./index.css";

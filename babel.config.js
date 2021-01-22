@@ -2,12 +2,16 @@ const presets = [
   [
     "@babel/preset-env",
     {
+      // Result error in case of this option
       // "useBuiltIns": "usage",
       // "corejs": 3,
-      "modules": 'cjs', // false to keep `esm`
+      // `cjs` prevent loadable produce chunks
+      "modules": 'auto', // false to keep `esm`, auto would work on both case `loadable` + `jest`
       "debug": false,
-      "targets": {
+      "targets": process.env.NODE_ENV === 'test' ? {
         "node": "current" // testing
+      } : {
+        "chrome": 80,
       }
     }
   ],
@@ -21,6 +25,7 @@ const presets = [
 ];
 
 const plugins = [
+  '@babel/plugin-syntax-dynamic-import',
   // '@babel/plugin-proposal-class-properties', // NOTE: It doesn't work with storybook
   [
     // https://github.com/gajus/babel-plugin-react-css-modules/issues/291

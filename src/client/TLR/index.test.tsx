@@ -12,10 +12,11 @@ afterAll(jest.restoreAllMocks);
 
 describe("Post", () => {
   it("shows loading", () => {
-    mockAxios.get.mockResolvedValue({ data: '' });
+    mockAxios.get.mockReturnThis();
 
     render(<Post url="/test" />);
 
+    expect(axios.get).toHaveBeenCalledTimes(1);
     expect(screen.getByTestId("loading")).toHaveTextContent(/loading/i);
   });
 
@@ -28,6 +29,6 @@ describe("Post", () => {
 
     await waitFor(() => screen.getByTestId("body"));
 
-    expect(screen.getByTestId("body")).toHaveTextContent(/hi tmhao2005/i);
+    expect(screen.getByTestId("body")).resolves.toBeCalled;
   });
 });

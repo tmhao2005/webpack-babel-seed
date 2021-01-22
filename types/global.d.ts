@@ -1,7 +1,8 @@
-import "react"
-
-declare module 'react' {
-  interface HTMLAttributes<T> {
-    styleName?: string;
+export {};
+declare global {
+  declare namespace NodeJS {
+    interface Global {
+      navigator: any;
+    }
   }
 }

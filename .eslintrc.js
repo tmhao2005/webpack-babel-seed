@@ -5,6 +5,10 @@ module.exports = {
     '@typescript-eslint',
     'import',
   ],
+  parserOptions: {
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
+  },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -23,10 +27,14 @@ module.exports = {
     "semi": 2,
     "import/order": 2,
     "camelcase": 2,
+    "react/no-unescaped-entities": 0,
+    "react/prop-types": 0,
+    "react/display-name": 0,
+    "@typescript-eslint/no-misused-promises": 2,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/no-use-before-define": 0,
-    "react/prop-types": 0,
+    "@typescript-eslint/ban-ts-comment": 0    
   }
 };

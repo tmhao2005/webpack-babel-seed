@@ -1,6 +1,5 @@
 const { resolve } = require('path');
 const { smart } = require('webpack-merge');
-const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
@@ -72,6 +71,7 @@ const common = {
           {
             loader: 'file-loader',
             options: {
+              // esModule: true, // require('images/baz').default 
               outputPath: "./images", // store on disk
               // publicPath: "./images", // on code request e.g: <img src="./images" />, if omitted, it will be as same ouputPath
             },
@@ -79,8 +79,8 @@ const common = {
         ],
       },
       {
-        test: /\.(css|less)$/,
-        include: /\.module\.(css|less)$/,
+        test: /\.(css|less|scss)$/,
+        include: /\.module\.(css|less|scss)$/,
         use: [
           'style-loader',
           'css-modules-typescript-loader',
@@ -97,8 +97,8 @@ const common = {
         ]
       },
       {
-        test: /\.(css|less)$/,
-        exclude: /\.module\.(css|less)$/,
+        test: /\.(css|less|scss)$/,
+        exclude: /\.module\.(css|less|scss)$/,
         use: [
           'style-loader',
           {
@@ -123,15 +123,10 @@ const common = {
       filename: 'index.html',
     }),
     new FaviconsWebpackPlugin({
-      logo: './images/stackoverflow.ico',
+      logo: './images/yt_32.png',
     }),
     new WebpackAssetsManifest(),
     new LoadablePlugin(),
-    new webpack.ProvidePlugin({
-      '$': 'jquery',
-      // 'jQuery': 'jquery',
-      // 'window.jQuery': 'jquery',
-    }),
   ],
   optimization: {
     splitChunks: {

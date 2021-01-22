@@ -1,6 +1,8 @@
 import React from "react";
 import { API } from "aws-amplify";
-import Foo from "./Foo";
+import { mount } from "enzyme";
+import { act } from "react-test-renderer";
+import Foo from ".";
 
 jest.mock("aws-amplify");
 
@@ -24,19 +26,19 @@ afterEach(() => {
   (API.post as jest.Mock).mockClear();
 });
 
-// const waitForComponentToPaint = async (wrapper: any) => {
-//   await act(async () => {
-//     await new Promise(resolve => setTimeout(resolve));
-//     wrapper.update();
-//   });
-// };
+const waitForComponentToPaint = async (wrapper: any) => {
+  await act(async () => {
+    await new Promise(resolve => setTimeout(resolve));
+    wrapper.update();
+  });
+};
 
 test('test with no act', async () => {
   const wrapper = mount(<Foo  appointmentId={1} />);
   expect(wrapper.find('div').at(0).text()).toEqual('Loading...');
 
   // Remove act warning
-  // await waitForComponentToPaint(wrapper)
+  await waitForComponentToPaint(wrapper);
   await act(async () => {
     await Promise.resolve(wrapper);
     // wrapper.update();

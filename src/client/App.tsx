@@ -1,27 +1,43 @@
-import * as React from "react";
-
-// @ts-ignore
+import React from "react";
 import loadable from '@loadable/component';
-// @ts-ignore
-import logo from "images/instagram-logo.jpeg";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-const Bar = loadable(
-  () => import('./Bar')
-);
-
+const Baz = loadable(() => import(/* webpackChunkName: "baz" */'./Bar'));
 
 import { ReactSelectTestComponent } from "@/client/Select";
-import url from "images/HT50.jpg";
+import Ace from "@/client/Ace";
+
+// import url from "images/HT50.jpg";
+// function loadImage(name: string) {
+//   return import(`images/${name}`);
+// }
 
 export function App() {
+  const v = 1;
   return (
-    <>
-      <ReactSelectTestComponent options={[
-        { label: 'Ronaldo', value: 'cr7' },
-        { label: 'Messi', value: 'm10' }
-      ]} />
-      <img width="400" height="200" src={logo} />
-      <img src={url} />
-    </>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" render={() => {
+          const templates = require.context('images', true, /\.(jpg|jpeg)$/);
+
+          return (
+            <>
+              {templates.keys().map((elem) => (
+                <img key={elem} src={templates(elem).default} />
+              ))}
+            </>
+          );
+        }}
+        />
+        <Route path="/editor" render={Ace} />
+        <Route path="/select" render={() => (
+          <ReactSelectTestComponent options={[
+            { label: 'Ronaldo', value: 'cr7' },
+            { label: 'Messi', value: 'm10' }
+          ]} />
+        )} />
+        <Route path="/baz" component={Baz} />
+      </Switch>
+    </BrowserRouter>
   );
 }

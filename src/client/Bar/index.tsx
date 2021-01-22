@@ -24,7 +24,7 @@ export const Bar = () => {
         <div className={css.bar}>Bar</div>
         <Test />
       </MuiPickersUtilsProvider>
-    ) : <button onClick={() => setOpen(true)} className="btn"></button>
+    ) : <button onClick={() => setOpen(true)} className="btn">Click me</button>
   );
 };
 

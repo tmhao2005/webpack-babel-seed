@@ -1,3 +1,5 @@
+type ArrayKeys<T> = Array<keyof T>;
+
 // Length
 type Length<T extends any[]> = T['length'];
 
@@ -32,9 +34,9 @@ type Last<T extends any[]> = {
 type testLast1 = Last<[1, 2]> // 2
 
 // Prepend
-type Prepend<V, T extends any[]> = ((a1: V, ...a2: T) => any) extends ((...a: infer R) => any) ? R : never;
+type Prepend1<V, T extends any[]> = ((a1: V, ...a2: T) => any) extends ((...a: infer R) => any) ? R : never;
 
-type testPrepend1 = Prepend<1, [2, 3]>
+type testPrepend1 = Prepend1<1, [2, 3]>
 
 // Key
 type ValueType<T, K> = K extends keyof T ? T[K] : never;

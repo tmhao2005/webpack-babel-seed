@@ -4,3 +4,4 @@ dist
 rollup
 coverage
 .env*
+yarn-error.log

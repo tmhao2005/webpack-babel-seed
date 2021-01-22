@@ -10,8 +10,8 @@ module.exports = {
   },
   testEnvironment: 'jest-environment-jsdom-fifteen',
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
-    // "^.+\\.(t|j)sx?$": "babel-jest",
+    "^.+\\.(t|j)sx?$": "ts-jest", // `tsc` is able to compile js file as well
+    // "^.+\\.(t|j)sx?$": "babel-jest", // @preset/env modules: `cjs` is only the option to work
     // "^.+\\.mjs$": "babel-jest",
     "\\.svg$": "jest-svg-transformer",
   },

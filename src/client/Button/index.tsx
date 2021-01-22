@@ -4,7 +4,7 @@ import { ButtonProps } from 'antd/lib/button/button';
 
 export type Props = ButtonProps
 
-const Button: React.FC = (props: Props) => {
+const Button: React.FunctionComponent = (props: Props) => {
   return <AntButton {...props} />;
 };
 
