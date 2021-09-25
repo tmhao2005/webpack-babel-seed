@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Sidebar component renders correctly 1`] = `
+<ContextProvider
+  value={null}
+>
+  <Sidebar
+    dispatch={[Function]}
+    firstName="savitha"
+    lastName="goel"
+    products={
+      Array [
+        Object {
+          "label": "CX Admin Application",
+        },
+        Object {
+          "label": "Application Configuration Management",
+        },
+      ]
+    }
+    store={
+      Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+  />
+</ContextProvider>
+`;

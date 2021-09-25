@@ -1,5 +1,4 @@
 import "@testing-library/dom";
-
 declare module "@testing-library/dom" {
   export type BoundFunction<T> = T extends (
     attribute: string,

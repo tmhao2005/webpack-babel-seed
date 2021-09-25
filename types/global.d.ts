@@ -5,4 +5,12 @@ declare global {
       navigator: any;
     }
   }
+
+  // interface Promise<T> {
+  //   finally<T>(f: () => void): Promise<T>,
+  // }
+
+  interface PromiseConstructor {
+    timeout(n: number): any;
+  }
 }

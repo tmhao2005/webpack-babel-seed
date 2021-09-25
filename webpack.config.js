@@ -1,37 +1,40 @@
-const { resolve } = require('path');
-const { smart } = require('webpack-merge');
-const Dotenv = require('dotenv-webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const LoadablePlugin = require('@loadable/webpack-plugin');
-const WebpackAssetsManifest = require('webpack-assets-manifest');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { resolve } = require("path");
+const { smart } = require("webpack-merge");
+const webpack = require("webpack");
+const Dotenv = require("dotenv-webpack");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+const LoadablePlugin = require("@loadable/webpack-plugin");
+const WebpackAssetsManifest = require("webpack-assets-manifest");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
+const path = require("path");
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === "production";
 
 const common = {
   context: resolve(__dirname),
-  name: 'client',
+  name: "client",
   entry: {
-    client: [resolve('src', 'client', 'index.tsx')],
+    client: [resolve("src", "client", "index.tsx")],
     // client: ['core-js/stable', 'regenerator-runtime/runtime', resolve('src', 'client', 'index.tsx')],
     // client: './src/index.ts',
   },
-  mode: isProd ? 'production' : 'development',
-  devtool: 'source-map',
-  target: 'web',
+  mode: isProd ? "production" : "development",
+  devtool: "source-map",
+  // IE11 support with `es5`
+  target: "web",
   output: {
-    filename: 'index.js',
-    path: resolve(__dirname, 'dist'),
-    publicPath: '/',
-    libraryTarget: 'umd',
-    library: "tmhao"
+    filename: "index.js",
+    path: resolve(__dirname, "dist"),
+    publicPath: "/",
+    libraryTarget: "umd",
+    library: "tmhao",
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
-      '@': resolve(__dirname, './src'),
-      'images': resolve(__dirname, './images'),
-    } 
+      "@": resolve(__dirname, "./src"),
+      images: resolve(__dirname, "./images"),
+    },
   },
   // externals: {
   //   'react': {
@@ -45,17 +48,18 @@ const common = {
   //     commonjs2: 'react-dom',
   //     amd: 'ReactDOM',
   //     root: 'ReactDOM'
-  //   }    
+  //   }
   // },
   module: {
     rules: [
       {
         test: /\.(ts|tsx|js|jsx)$/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
+      // Or using ts-loader but will no longer be able to use useful babel plugins due to using tsc
       // {
       //   test: /\.(ts|tsx)$/,
       //   use: {
@@ -67,11 +71,12 @@ const common = {
       // },
       {
         test: /\.(png|svg|jpe?g|gif)$/i,
+        // include: [path.resolve(__dirname, "images")],
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              // esModule: true, // require('images/baz').default 
+              // esModule: true, // require('images/baz').default
               outputPath: "./images", // store on disk
               // publicPath: "./images", // on code request e.g: <img src="./images" />, if omitted, it will be as same ouputPath
             },
@@ -82,76 +87,79 @@ const common = {
         test: /\.(css|less|scss)$/,
         include: /\.module\.(css|less|scss)$/,
         use: [
-          'style-loader',
-          'css-modules-typescript-loader',
+          "style-loader",
+          "css-modules-typescript-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               // should apply for css modules only
               modules: {
-                localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
+                localIdentName: "[path]___[name]__[local]___[hash:base64:5]",
               },
-            }
+            },
           },
-          'less-loader',
-        ]
+          "less-loader",
+        ],
       },
       {
         test: /\.(css|less|scss)$/,
         exclude: /\.module\.(css|less|scss)$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: false,
-            }
+            },
           },
-          'less-loader',
-        ]
-      }
-    ]
+          "less-loader",
+        ],
+      },
+    ],
   },
   plugins: [
     new Dotenv({
-      path: isProd ? '.env.prod' : '.env.dev',
+      path: isProd ? ".env.prod" : ".env.dev",
       safe: false,
       systemvars: true,
     }),
     new HTMLWebpackPlugin({
-      template: resolve(__dirname, 'index.ejs'),
-      filename: 'index.html',
+      template: resolve(__dirname, "index.ejs"),
+      filename: "index.html",
     }),
     new FaviconsWebpackPlugin({
-      logo: './images/yt_32.png',
+      logo: "./images/yt_32.png",
     }),
     new WebpackAssetsManifest(),
     new LoadablePlugin(),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+    }),
   ],
   optimization: {
     splitChunks: {
       cacheGroups: {
         commons: {
-          chunks: 'initial',
+          chunks: "initial",
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
+          name: "vendors",
         },
       },
     },
   },
-  node: { fs: 'empty', worker_threads: 'empty' },
+  node: { fs: "empty", worker_threads: "empty" },
   devServer: {
     historyApiFallback: {
-      index: '/'
+      index: "/",
     },
-    open: true,
+    open: false,
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        pathRewrite: {'^/api' : ''},
+      "/api": {
+        target: "http://localhost:3000",
+        pathRewrite: { "^/api": "" },
         secure: false,
-      }
-    }
+      },
+    },
   },
 };
 

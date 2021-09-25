@@ -1,8 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 
-const Component = lazy(() => import("./Bar"));
-const PageNotFound = lazy(() => import("./Foo"));
+const Component = lazy(() => import("./Home"));
+const PageNotFound = lazy(() => import("./404"));
 
 export default function App() {
   return (

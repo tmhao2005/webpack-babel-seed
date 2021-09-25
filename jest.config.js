@@ -15,11 +15,12 @@ module.exports = {
     // "^.+\\.mjs$": "babel-jest",
     "\\.svg$": "jest-svg-transformer",
   },
-  testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/node_modules/", "<rootDir>/dist/", "<rootDir>/lib/"],
+  testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/node_modules/", "<rootDir>/dist/", "<rootDir>/lib/", '<rootDir>/cypress'],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],  
   moduleNameMapper: {
     "^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
     "^@/(.*)$": "<rootDir>/src/$1",
+    "^client/(.*)$": "<rootDir>/src/client/$1",
     "\\.(pug)$": "identity-obj-proxy"
   },
   transformIgnorePatterns: [`/node_modules/(?!(foo|baz))`], // Work for this case `node_modules/foo/node_modules/baz/bar/index.js`

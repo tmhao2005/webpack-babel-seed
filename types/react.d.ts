@@ -1,6 +1,6 @@
 export {};
 
-declare module 'react' {
+declare module "react" {
   interface HTMLAttributes<T> {
     styleName?: string;
   }

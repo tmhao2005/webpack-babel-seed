@@ -2,13 +2,13 @@ import { mount } from "enzyme";
 import { act } from 'react-dom/test-utils';
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
-import PageNotFound from "./Foo";
-import Component from "./Bar";
+import PageNotFound from "./Home";
+import Component from "./404";
 import App from ".";
 
 jest.mock('react', () => {
   const React = jest.requireActual('react');
-  // @ts-ignore
+
   const Suspense = ({ children }) => {
     return children ? children : null;
   };
@@ -57,7 +57,7 @@ describe("App", () => {
     // wrapper.update()
 
     // Assert
-    console.log(wrapper.debug());
+    // console.log(wrapper.debug());
     expect(wrapper.exists(PageNotFound)).toEqual(true);
   });
 
@@ -71,7 +71,7 @@ describe("App", () => {
     await waitForComponentToPaint(wrapper);
 
     // Assert
-    console.log(wrapper.debug());
+    // console.log(wrapper.debug());
     expect(wrapper.exists(Component)).toEqual(true);
     expect(wrapper.exists(PageNotFound)).toEqual(false);
   });
