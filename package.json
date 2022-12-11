@@ -182,7 +182,7 @@
     "date-fns": "^2.16.1",
     "dayjs": "^1.10.3",
     "details-element-polyfill": "^2.4.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-promise-router": "^4.0.1",
     "ffmpeg.js": "^4.2.9003",
     "fullcalendar": "^3.9.0",
